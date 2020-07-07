@@ -41,46 +41,25 @@ var cors = require("cors");
 var prisma = new PrismaClient();
 var app = express();
 var port = 1234;
-// app.use(express.json());
-// app.get(`/`, async (req, res) => {
-//     res.send("Up and running!")
-// })
-// app.get(`/users`, async (req, res) => {
-//     const allUsers = await prisma.user.findMany();
-//     res.status(200).json(allUsers)
-// })
-// app.listen(port, () => {
-//     console.log(
-// `\n
-// --------------------------------------------\n
-// Server running on port ${port}\n
-// --------------------------------------------\n`
-// )
-// })
-function main() {
-    return __awaiter(this, void 0, void 0, function () {
-        var allUsers;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, prisma.user.findMany()];
-                case 1:
-                    allUsers = _a.sent();
-                    console.log(allUsers);
-                    console.log(1);
-                    return [2 /*return*/];
-            }
-        });
+app.use(express.json());
+app.get("/", function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        res.send("Up and running!");
+        return [2 /*return*/];
     });
-}
-main()["catch"](function (e) {
-    throw e;
-})["finally"](function () { return __awaiter(_this, void 0, void 0, function () {
+}); });
+app.get("/users", function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+    var allUsers;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, prisma.disconnect()];
+            case 0: return [4 /*yield*/, prisma.user.findMany()];
             case 1:
-                _a.sent();
+                allUsers = _a.sent();
+                res.status(200).json(allUsers);
                 return [2 /*return*/];
         }
     });
 }); });
+app.listen(port, function () {
+    console.log("\n\n--------------------------------------------\n\nServer running on port " + port + "\n\n--------------------------------------------\n");
+});
