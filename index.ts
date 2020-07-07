@@ -13,7 +13,7 @@ app.get(`/`, async (req, res) => {
   res.send("Up and running!");
 });
 
-app.get(`/users`, async (req, res) => {
+app.post(`/users`, async (req, res) => {
   const result = await prisma.user.create({
     data: {
       ...req.body,
@@ -22,7 +22,7 @@ app.get(`/users`, async (req, res) => {
   res.status(200).json(result);
 });
 
-app.post(`/users`, async (req, res) => {
+app.get(`/users`, async (req, res) => {
   const allUsers = await prisma.user.findMany();
   res.status(200).json(allUsers);
 });

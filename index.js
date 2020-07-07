@@ -1,3 +1,14 @@
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -42,10 +53,25 @@ var prisma = new PrismaClient();
 var app = express();
 var port = 1234;
 app.use(express.json());
+app.use(cors());
 app.get("/", function (req, res) { return __awaiter(_this, void 0, void 0, function () {
     return __generator(this, function (_a) {
         res.send("Up and running!");
         return [2 /*return*/];
+    });
+}); });
+app.post("/users", function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+    var result;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, prisma.user.create({
+                    data: __assign({}, req.body)
+                })];
+            case 1:
+                result = _a.sent();
+                res.status(200).json(result);
+                return [2 /*return*/];
+        }
     });
 }); });
 app.get("/users", function (req, res) { return __awaiter(_this, void 0, void 0, function () {
