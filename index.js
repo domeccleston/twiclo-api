@@ -49,43 +49,73 @@ var _this = this;
 var PrismaClient = require("@prisma/client").PrismaClient;
 var express = require("express");
 var cors = require("cors");
+var bcrypt = require("bcryptjs");
+var _a = require("express-json-validator-middleware"), Validator = _a.Validator, ValidationError = _a.ValidationError;
 var prisma = new PrismaClient();
 var app = express();
+var validator = new Validator({ allErrors: true });
+var validate = validator.validate;
 var port = 1234;
 app.use(express.json());
 app.use(cors());
+var registrationSchema = {
+    type: "object",
+    required: ["email", "password"]
+};
 app.get("/", function (req, res) { return __awaiter(_this, void 0, void 0, function () {
     return __generator(this, function (_a) {
         res.send("Up and running!");
         return [2 /*return*/];
     });
 }); });
-app.post("/users", function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-    var result;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, prisma.user.create({
-                    data: __assign({}, req.body)
-                })];
-            case 1:
-                result = _a.sent();
-                res.status(200).json(result);
-                return [2 /*return*/];
-        }
-    });
-}); });
 app.get("/users", function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-    var allUsers;
+    var users;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, prisma.user.findMany()];
             case 1:
-                allUsers = _a.sent();
-                res.status(200).json(allUsers);
+                users = _a.sent();
+                res.send(users);
                 return [2 /*return*/];
         }
     });
 }); });
+app.post("/register", validate({ body: registrationSchema }), function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+    var result;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, prisma.user.create({
+                    data: __assign(__assign({}, req.body), { password: bcrypt.hashSync(req.body.password, 14) })
+                })];
+            case 1:
+                result = _a.sent();
+                res.json(result);
+                return [2 /*return*/];
+        }
+    });
+}); });
+app.post("/login", function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+    var user;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, prisma.user.findOne({ where: { id: req.body.id } })];
+            case 1:
+                user = _a.sent();
+                // if (user && bcrypt.compareSync(password, user.password))
+                res.send(user);
+                return [2 /*return*/];
+        }
+    });
+}); });
+app.use(function (err, req, res, next) {
+    if (err instanceof ValidationError) {
+        res.status(400).send("Invalid input");
+        next();
+    }
+    else {
+        next(err);
+    }
+});
 app.listen(port, function () {
-    console.log("\n\n--------------------------------------------\n\nServer running on port " + port + "\n\n--------------------------------------------\n");
+    console.log("\n\n--------------------------------------------\n\nServer running on port " + port + " \uD83D\uDE80\n \n--------------------------------------------\n");
 });
