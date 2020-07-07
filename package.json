@@ -1,0 +1,18 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Dom Eccleston <domeccleston@gmail.com> (http://github.com/domeccleston)",
+  "license": "ISC",
+  "devDependencies": {
+    "@prisma/cli": "^2.2.0",
+    "@types/node": "^14.0.18",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6"
+  }
+}
