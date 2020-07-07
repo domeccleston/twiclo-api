@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx nodemon .",
-    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc"
   },
   "keywords": [],
