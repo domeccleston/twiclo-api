@@ -2,9 +2,12 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx nodemon .",
+    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "Dom Eccleston <domeccleston@gmail.com> (http://github.com/domeccleston)",
@@ -13,9 +16,14 @@
     "@prisma/cli": "^2.2.0",
     "@types/node": "^14.0.18",
     "ts-node": "^8.10.2",
+    "tslint": "^6.1.2",
     "typescript": "^3.9.6"
   },
   "dependencies": {
-    "@prisma/client": "^2.2.0"
+    "@prisma/client": "^2.2.0",
+    "@types/express": "^4.17.7",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
   }
 }
