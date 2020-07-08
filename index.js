@@ -46,11 +46,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var _this = this;
+require('dotenv').config();
 var PrismaClient = require("@prisma/client").PrismaClient;
 var express = require("express");
 var cors = require("cors");
 var bcrypt = require("bcryptjs");
 var _a = require("express-json-validator-middleware"), Validator = _a.Validator, ValidationError = _a.ValidationError;
+var generateToken = require("./utils/generate-token");
 var prisma = new PrismaClient();
 var app = express();
 var validator = new Validator({ allErrors: true });
@@ -98,11 +100,22 @@ app.post("/login", function (req, res) { return __awaiter(_this, void 0, void 0,
     var user;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, prisma.user.findOne({ where: { id: req.body.id } })];
+            case 0: return [4 /*yield*/, prisma.user.findOne({
+                    where: {
+                        email: req.body.email
+                    }
+                })];
             case 1:
                 user = _a.sent();
-                // if (user && bcrypt.compareSync(password, user.password))
-                res.send(user);
+                if (user && bcrypt.compareSync(req.body.password, user.password)) {
+                    res.status(200).json({
+                        user: user,
+                        token: generateToken(user)
+                    });
+                }
+                else {
+                    res.status(401).json("Invalid credentials");
+                }
                 return [2 /*return*/];
         }
     });

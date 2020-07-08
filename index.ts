@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { PrismaClient } = require("@prisma/client");
 const express = require("express");
 const cors = require("cors");
@@ -6,7 +7,7 @@ const {
   Validator,
   ValidationError,
 } = require("express-json-validator-middleware");
-const generateToken = require('./utils/generate-token');
+const generateToken = require("./utils/generate-token");
 
 const prisma = new PrismaClient();
 const app = express();
@@ -46,12 +47,20 @@ app.post(
 );
 
 app.post(`/login`, async (req, res) => {
-    const user = await prisma.user.findOne({ where: { id: req.body.id } });
-    if (user && bcrypt.compareSync(req.body.password, user.password)) {
-        const token = generateToken(user.id)
-        res.status(200).json(user)
-    }
-})
+  const user = await prisma.user.findOne({
+     where: { 
+       email: req.body.email 
+      } 
+    });
+  if (user && bcrypt.compareSync(req.body.password, user.password)) {
+    res.status(200).json({
+      user,
+      token: generateToken(user),
+    });
+  } else {
+    res.status(401).json("Invalid credentials");
+  }
+});
 
 app.use(function (err, req, res, next) {
   if (err instanceof ValidationError) {
