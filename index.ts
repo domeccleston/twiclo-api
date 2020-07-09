@@ -18,7 +18,7 @@ const port = 1234;
 app.use(express.json());
 app.use(cors());
 
-const registrationSchema = {
+const userSchema = {
   type: "object",
   required: ["email", "password"],
 };
@@ -34,7 +34,7 @@ app.get(`/users`, async (req, res) => {
 
 app.post(
   `/register`,
-  validate({ body: registrationSchema }),
+  validate({ body: userSchema }),
   async (req, res) => {
     const result = await prisma.user.create({
       data: {
@@ -46,7 +46,9 @@ app.post(
   }
 );
 
-app.post(`/login`, async (req, res) => {
+app.post(`/login`,
+  validate({ body: userSchema}),
+  async (req, res) => {
   const user = await prisma.user.findOne({
      where: { 
        email: req.body.email 
