@@ -7,7 +7,10 @@
     "start": "nodemon --exec ts-node index.ts",
     "build": "tsc",
     "test": "jest --watch",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "inspect": "npx prisma studio --experimental",
+    "migrate-save": "npx prisma migrate save --experimental",
+    "migrate-up": "npx prisma migrate up --experimental"
   },
   "keywords": [],
   "author": "Dom Eccleston <domeccleston@gmail.com> (http://github.com/domeccleston)",

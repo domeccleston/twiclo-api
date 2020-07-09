@@ -37,3 +37,5 @@ describe('Test basic API functionality', () => {
     expect(response.statusCode).toBe(200);
   });
 });
+
+export {}
