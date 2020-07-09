@@ -84,7 +84,15 @@ app.get(`/posts/:id`, async (req, res) => {
   res.status(200).send(postsByAuthor)
 })
 
-app.delete(`/posts/:`)
+
+app.delete(`/posts/:id`, async (req, res) => {
+  const postToDelete = await prisma.post.findOne({
+    where: {
+      id: parseInt(req.params.id)
+    }
+  })
+  res.status(200).json({ message: 'Post deleted'});
+})
 
 app.use(function (err, req, res, next) {
   if (err instanceof ValidationError) {

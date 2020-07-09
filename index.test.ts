@@ -36,6 +36,22 @@ describe('Test basic API functionality', () => {
 
     expect(response.statusCode).toBe(200);
   });
+
+  test('User can add a post', async () => {
+    // TODO: test POST /posts route
+  })
+
+  test('User can retrieve all posts', async () => {
+    // TODO: test GET /posts route
+  })
+
+  test('User retrieve post by id', async () => {
+    // TODO: test GET /posts/:id route
+  })
+
+  test('User can delete post by id', async () => {
+    // TODO: test DELETE /posts/:id route
+  })
 });
 
 export {}
