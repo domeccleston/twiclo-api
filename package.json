@@ -28,6 +28,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-json-validator-middleware": "^2.1.1",
+    "jest": "^26.1.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.1",
     "nodemon": "^2.0.4",

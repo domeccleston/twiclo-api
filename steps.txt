@@ -6,6 +6,7 @@
 [6] set up login route [x]
 [7] set up token authentication [x]
 [8] add README.MD [x]
+[10] setup tests [x]
 [9] add in all posts route [ ]
 [10] add in single user's posts route [ ]
 [11] add in delete post route [ ]

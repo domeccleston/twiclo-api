@@ -42,7 +42,7 @@ app.post(
         password: bcrypt.hashSync(req.body.password, 14),
       },
     });
-    res.json(result);
+    res.status(200).json(result);
   }
 );
 
@@ -79,3 +79,7 @@ Server running on port ${port} 🚀\n
 --------------------------------------------\n`
   );
 });
+
+
+module.exports = app;
+export {}; // I'm using ES5 imports, but Typescript needs an export statement to know this file is a module
